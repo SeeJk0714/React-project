@@ -14,24 +14,24 @@ import { FaRegAddressBook } from "react-icons/fa";
 export default function Study() {
     const [keywords, setKeywords] = useState("");
     const journalList = JSON.parse(localStorage.getItem("journal"));
+    const regex = /(<([^>]+)>)/gi;
 
     const searchedList = useMemo(() => {
-        if (journalList) {
-            return journalList.filter(
+        return journalList
+            .filter(
                 (i) =>
                     i.title.toLowerCase().indexOf(keywords.toLowerCase()) >=
                         0 ||
-                    i.content.toLowerCase().indexOf(keywords.toLowerCase()) >= 0
+                    i.content
+                        .replace(regex, "")
+                        .toLowerCase()
+                        .indexOf(keywords.toLowerCase()) >= 0
+            )
+            .sort(
+                (a, b) =>
+                    new Date(b.createDate).valueOf() -
+                    new Date(a.createDate).valueOf()
             );
-        }
-        // if (studyList) {
-        //     return studyList.filter(
-        //         (i) =>
-        //             i.title.toLowerCase().indexOf(keywords.toLowerCase()) >=
-        //                 0 ||
-        //             i.content.toLowerCase().indexOf(keywords.toLowerCase()) >= 0
-        //     );
-        // }
     }, [journalList, keywords]);
 
     return (
@@ -61,8 +61,8 @@ export default function Study() {
             <Container>
                 <Row>
                     {searchedList.length > 0 ? (
-                        searchedList.map((plan) => {
-                            const { id, title, content, date } = plan;
+                        searchedList.map((journal) => {
+                            const { id, title, content, createDate } = journal;
                             return (
                                 <Col lg={4} md={6} className="mt-4 ">
                                     <Link
@@ -78,19 +78,33 @@ export default function Study() {
                                             <Card.Body>
                                                 <Card.Title>{title}</Card.Title>
                                                 <Card.Text>
-                                                    <div
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: content,
-                                                        }}
-                                                    />
+                                                    {content.length > 15 ? (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html:
+                                                                    content.slice(
+                                                                        0,
+                                                                        15
+                                                                    ) + "...",
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: content,
+                                                            }}
+                                                        />
+                                                    )}
                                                 </Card.Text>
                                             </Card.Body>
-                                            <Row className="mb-3">
-                                                <small className="col-9 text-muted">
-                                                    {date}
-                                                </small>
-                                                <FaRegAddressBook className="col-3 fs-2" />
-                                            </Row>
+                                            <Container>
+                                                <Row className="mb-4 ">
+                                                    <small className="col-9 text-muted ">
+                                                        {createDate}
+                                                    </small>
+                                                    <FaRegAddressBook className="col-3 fs-2" />
+                                                </Row>
+                                            </Container>
                                         </Card>
                                     </Link>
                                 </Col>

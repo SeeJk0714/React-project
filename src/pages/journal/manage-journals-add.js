@@ -1,27 +1,25 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { RichTextEditor, Link as EditorLink } from "@mantine/tiptap";
-import { notifications } from "@mantine/notifications";
-
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
+import { notifications } from "@mantine/notifications";
 
-export default function ManageJournalsAdd() {
+export default function ManageJournalAdd() {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [date, setDate] = useState("");
+    const [createdate, setCreateDate] = useState("");
     const [password, setPassword] = useState("");
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("publish");
     const dateFormat = (date) => {
         return new Date(date).toLocaleString();
     };
     const now = new Date();
-    const createDate = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    const nowDate = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     const editor = useEditor({
         extensions: [StarterKit, Underline, EditorLink, Highlight, TextAlign],
         content: content,
@@ -29,15 +27,15 @@ export default function ManageJournalsAdd() {
             setContent(editor.getHTML());
         },
     });
-
-    const submitForm = () => {
+    const submitForm = (event) => {
         let journal = JSON.parse(localStorage.getItem("journal"));
-        if (title && content && createDate && password && status) {
+        if (title && content && nowDate && status) {
             journal.push({
-                id: Math.floor(Math.random() * 999999),
-                title: title,
-                content: content,
-                date: createDate,
+                id: Math.floor(Math.random() * 999999), // get random id
+                title: title, // pass in the value from the title
+                content: content, // pass in the value from the content
+                createDate: nowDate, // set the status to "review" as default value
+                updatedate: nowDate,
                 password: password,
                 status: status,
                 item: "journal",
@@ -64,18 +62,20 @@ export default function ManageJournalsAdd() {
                     <h1 className="h1">Add New Journal</h1>
                 </div>
                 <div className="card mb-2 p-4">
-                    <form onSubmit={submitForm}>
+                    <form
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            submitForm();
+                        }}
+                    >
                         <div className="mb-3">
-                            <label
-                                htmlFor="journal-title"
-                                className="form-label"
-                            >
+                            <label htmlFor="post-title" className="form-label">
                                 Title
                             </label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="journal-title"
+                                id="post-title"
                                 value={title}
                                 onChange={(event) => {
                                     setTitle(event.target.value);
@@ -84,7 +84,7 @@ export default function ManageJournalsAdd() {
                         </div>
                         <div className="mb-3">
                             <label
-                                htmlFor="journal-content"
+                                htmlFor="post-content"
                                 className="form-label"
                             >
                                 What you want to study
@@ -118,14 +118,14 @@ export default function ManageJournalsAdd() {
                             </RichTextEditor>
                             <div className="mb-3">
                                 <label
-                                    for="journal-content"
+                                    for="journals-content"
                                     className="form-label"
                                 >
                                     Status
                                 </label>
                                 <select
                                     className="form-control"
-                                    id="journal-status"
+                                    id="journals-status"
                                     value={status}
                                     onChange={(event) => {
                                         setStatus(event.target.value);
@@ -138,7 +138,7 @@ export default function ManageJournalsAdd() {
                             {status === "private" ? (
                                 <div className="mb-3">
                                     <label
-                                        for="journal-title"
+                                        for="journals-title"
                                         className="form-label"
                                     >
                                         Password
@@ -146,7 +146,7 @@ export default function ManageJournalsAdd() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="journal-password"
+                                        id="journals-password"
                                         value={password}
                                         onChange={(event) =>
                                             setPassword(event.target.value)
@@ -159,7 +159,7 @@ export default function ManageJournalsAdd() {
                                     type="text"
                                     className="form-control"
                                     id="date-input"
-                                    value={createDate}
+                                    value={nowDate}
                                     hidden
                                 />
                             </div>

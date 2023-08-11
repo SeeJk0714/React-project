@@ -29,7 +29,7 @@ export default function Journal() {
     const {
         title = "",
         content = "",
-        date = "",
+        createDate = "",
         status,
         updateDate = "",
     } = jour;
@@ -110,7 +110,7 @@ export default function Journal() {
                                 dangerouslySetInnerHTML={{ __html: content }}
                             />
                             <p className="mt-5 pt-5 text-muted">
-                                Create Date: {date}
+                                Create Date: {createDate}
                             </p>
                             <p className="mt-0  pt-0 text-muted">
                                 Edit at: {updateDate === "" ? "-" : updateDate}
@@ -140,7 +140,7 @@ export default function Journal() {
                     <h1 className="h1 text-start">{title}</h1>
                     <hr></hr>
                     <div dangerouslySetInnerHTML={{ __html: content }} />
-                    <p className="mt-5 text-muted">Create Date: {date}</p>
+                    <p className="mt-5 text-muted">Create Date: {createDate}</p>
                     <p className=" text-muted">
                         Edit at: {updateDate === "" ? "-" : updateDate}
                     </p>

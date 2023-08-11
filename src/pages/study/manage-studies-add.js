@@ -14,14 +14,24 @@ import { IconClock } from "@tabler/icons-react";
 import { TimeInput } from "@mantine/dates";
 import { DatePickerInput } from "@mantine/dates";
 import { Space } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 
-export default function AddStudyPlanner() {
+export default function ManageStudiesAdd() {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [date, setDate] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
+    const [createDate, setCreateDate] = useState("");
+
+    const dateFormat = (date) => {
+        return new Date(date).toLocaleString();
+    };
+    const now = new Date();
+    const nowDate = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -39,20 +49,33 @@ export default function AddStudyPlanner() {
     const submitForm = () => {
         let plans = JSON.parse(localStorage.getItem("plans"));
 
-        if (!plans) plans = [];
+        if (title && content && startDate && endDate && startTime && endTime) {
+            plans.push({
+                id: Math.floor(Math.random() * 100000),
+                title: title,
+                content: content,
+                startDate: startDate,
+                endDate: endDate,
+                startTime: startTime,
+                endTime: endTime,
+                createDate: nowDate,
+                item: "study",
+            });
 
-        plans.push({
-            id: Math.floor(Math.random() * 100000),
-            title: title,
-            content: content,
-            date: date,
-            startTime: startTime,
-            endTime: endTime,
-        });
-
-        localStorage.setItem("plans", JSON.stringify(plans));
-
-        navigate("/manage-studies");
+            localStorage.setItem("plans", JSON.stringify(plans));
+            notifications.show({
+                title: "Create succesful ",
+                message: "Thank You!",
+                color: "green",
+            });
+            navigate("/manage-studies");
+        } else {
+            notifications.show({
+                title: "Please insert the value",
+                message: "Thank You!",
+                color: "red",
+            });
+        }
     };
 
     return (
@@ -138,16 +161,40 @@ export default function AddStudyPlanner() {
                                     setEndTime(event.target.value);
                                 }}
                             />
-                            <Space w="xl" />
+                        </div>
+                        <div style={{ display: "flex" }}>
                             <DatePickerInput
-                                value={date}
-                                onChange={(newValue) => {
-                                    setDate(newValue);
+                                value={startDate}
+                                onChange={(newStart) => {
+                                    setStartDate(newStart);
                                 }}
-                                label="Date input"
-                                placeholder="Date input"
+                                label="Start Date"
+                                placeholder="Start Date"
                                 maw={400}
                                 mx="end"
+                                w={115}
+                            />
+                            <Space w="xl" />
+
+                            <DatePickerInput
+                                value={endDate}
+                                onChange={(newEnd) => {
+                                    setEndDate(newEnd);
+                                }}
+                                label="End Date"
+                                placeholder="End Date"
+                                maw={400}
+                                mx="end"
+                                w={115}
+                            />
+                        </div>
+                        <div className="mt-2">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="date-input"
+                                value={createDate}
+                                hidden
                             />
                         </div>
 

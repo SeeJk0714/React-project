@@ -14,24 +14,24 @@ import { GiNotebook } from "react-icons/gi";
 export default function Study() {
     const [keywords, setKeywords] = useState("");
     const studyList = JSON.parse(localStorage.getItem("plans"));
+    const regex = /(<([^>]+)>)/gi;
 
     const searchedList = useMemo(() => {
-        // if (journalList) {
-        //     return journalList.filter(
-        //         (i) =>
-        //             i.title.toLowerCase().indexOf(keywords.toLowerCase()) >=
-        //                 0 ||
-        //             i.content.toLowerCase().indexOf(keywords.toLowerCase()) >= 0
-        //     );
-        // }
-        if (studyList) {
-            return studyList.filter(
+        return studyList
+            .filter(
                 (i) =>
                     i.title.toLowerCase().indexOf(keywords.toLowerCase()) >=
                         0 ||
-                    i.content.toLowerCase().indexOf(keywords.toLowerCase()) >= 0
+                    i.content
+                        .replace(regex, "")
+                        .toLowerCase()
+                        .indexOf(keywords.toLowerCase()) >= 0
+            )
+            .sort(
+                (a, b) =>
+                    new Date(b.createDate).valueOf() -
+                    new Date(a.createDate).valueOf()
             );
-        }
     }, [studyList, keywords]);
 
     return (
@@ -61,9 +61,16 @@ export default function Study() {
             <Container>
                 <Row>
                     {searchedList.length > 0 ? (
-                        searchedList.map((plan) => {
-                            const { id, title, content, startTime, endTime } =
-                                plan;
+                        searchedList.map((study) => {
+                            const {
+                                id,
+                                title,
+                                content,
+                                startDate,
+                                endDate,
+                                startTime,
+                                endTime,
+                            } = study;
                             return (
                                 <Col lg={4} md={6} className="mt-4 ">
                                     <Link
@@ -79,19 +86,41 @@ export default function Study() {
                                             <Card.Body>
                                                 <Card.Title>{title}</Card.Title>
                                                 <Card.Text>
-                                                    <div
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: content,
-                                                        }}
-                                                    />
+                                                    {content.length > 15 ? (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html:
+                                                                    content.slice(
+                                                                        0,
+                                                                        15
+                                                                    ) + "...",
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: content,
+                                                            }}
+                                                        />
+                                                    )}
                                                 </Card.Text>
                                             </Card.Body>
-                                            <Row className="mb-3">
-                                                <small className="col-9 text-muted">
-                                                    {startTime} - {endTime}
-                                                </small>
-                                                <GiNotebook className="col-3 fs-2" />
-                                            </Row>
+                                            <Container>
+                                                <Row className="mb-3">
+                                                    <small className="col-9 text-muted">
+                                                        Time: {startTime} -
+                                                        {endTime}
+                                                        <br />
+                                                        {startDate?.slice(
+                                                            0,
+                                                            10
+                                                        )}{" "}
+                                                        -{endDate?.slice(0, 10)}
+                                                    </small>
+
+                                                    <GiNotebook className="col-3 fs-2" />
+                                                </Row>
+                                            </Container>
                                         </Card>
                                     </Link>
                                 </Col>

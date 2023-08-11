@@ -39,7 +39,8 @@ export default function ManageStudies() {
                             <th scope="col">Content</th>
                             <th scope="col">Start Time</th>
                             <th scope="col">End Time</th>
-                            <th scope="col">Date</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
                             <th scope="col" className="text-end">
                                 Actions
                             </th>
@@ -48,17 +49,38 @@ export default function ManageStudies() {
                     <tbody>
                         {plans
                             ? plans.map((plan) => {
+                                  const {
+                                      id,
+                                      title,
+                                      content,
+                                      startDate,
+                                      endDate,
+                                      startTime,
+                                      endTime,
+                                  } = plan;
                                   return (
-                                      <tr key={plan.id}>
-                                          <td>{plan.title}</td>
-                                          <td
-                                              dangerouslySetInnerHTML={{
-                                                  __html: plan.content,
-                                              }}
-                                          />
-                                          <td>{plan.startTime}</td>
-                                          <td>{plan.endTime}</td>
-                                          <td>{plan.date.slice(0, 10)}</td>
+                                      <tr key={id}>
+                                          <td>{title}</td>
+                                          {content.length > 15 ? (
+                                              <td
+                                                  dangerouslySetInnerHTML={{
+                                                      __html:
+                                                          content.slice(0, 15) +
+                                                          "...",
+                                                  }}
+                                              />
+                                          ) : (
+                                              <td
+                                                  dangerouslySetInnerHTML={{
+                                                      __html: content,
+                                                  }}
+                                              />
+                                          )}
+
+                                          <td>{startTime}</td>
+                                          <td>{endTime}</td>
+                                          <td>{startDate?.slice(0, 10)}</td>
+                                          <td>{endDate?.slice(0, 10)}</td>
                                           <td className="text-end">
                                               <div className="buttons">
                                                   {/* <Link
@@ -69,7 +91,7 @@ export default function ManageStudies() {
                             <i className="bi bi-eye"></i>
                           </Link> */}
                                                   <Link
-                                                      to={`/manage-studies-edit/${plan.id}`}
+                                                      to={`/manage-studies-edit/${id}`}
                                                       className="btn btn-secondary btn-sm me-2"
                                                   >
                                                       <i className="bi bi-pencil"></i>
@@ -77,7 +99,7 @@ export default function ManageStudies() {
                                                   <button
                                                       className="btn btn-danger btn-sm"
                                                       onClick={() => {
-                                                          deletePlan(plan.id);
+                                                          deletePlan(id);
                                                       }}
                                                   >
                                                       <i className="bi bi-trash"></i>

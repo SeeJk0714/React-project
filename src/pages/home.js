@@ -32,7 +32,8 @@ export default function Home() {
             )
             .sort(
                 (a, b) =>
-                    new Date(b.date).valueOf() - new Date(a.date).valueOf()
+                    new Date(b.createDate).valueOf() -
+                    new Date(a.createDate).valueOf()
             );
     }, [journalList, studyList, keywords]);
 
@@ -68,8 +69,10 @@ export default function Home() {
                                 id,
                                 title,
                                 content,
-                                date,
+                                createDate,
                                 item,
+                                startDate,
+                                endDate,
                                 startTime,
                                 endTime,
                             } = journal;
@@ -86,37 +89,67 @@ export default function Home() {
                                             }}
                                         >
                                             <Card.Body>
-                                                <Card.Title>{title}</Card.Title>
+                                                <Card.Title className="mb-3 ">
+                                                    {title}
+                                                </Card.Title>
                                                 <Card.Text>
-                                                    <div
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: content,
-                                                        }}
-                                                    />
+                                                    {content.length > 15 ? (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html:
+                                                                    content.slice(
+                                                                        0,
+                                                                        15
+                                                                    ) + "...",
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: content,
+                                                            }}
+                                                        />
+                                                    )}
                                                 </Card.Text>
                                             </Card.Body>
-                                            {(() => {
-                                                if (item === "journal") {
-                                                    return (
-                                                        <Row className="mb-3 ">
-                                                            <small className="col-9 text-muted">
-                                                                {date}
-                                                            </small>
-                                                            <FaRegAddressBook className="col-3 fs-2" />
-                                                        </Row>
-                                                    );
-                                                } else if (item === "study") {
-                                                    return (
-                                                        <Row className="mb-3">
-                                                            <small className="col-9 text-muted">
-                                                                {startTime} -
-                                                                {endTime}
-                                                            </small>
-                                                            <GiNotebook className="col-3 fs-2" />
-                                                        </Row>
-                                                    );
-                                                }
-                                            })()}
+                                            <Container>
+                                                {(() => {
+                                                    if (item === "journal") {
+                                                        return (
+                                                            <Row className="mb-4 ">
+                                                                <small className="col-9 text-muted ">
+                                                                    {createDate}
+                                                                </small>
+                                                                <FaRegAddressBook className="col-3 fs-2" />
+                                                            </Row>
+                                                        );
+                                                    } else if (
+                                                        item === "study"
+                                                    ) {
+                                                        return (
+                                                            <Row className="mb-3">
+                                                                <small className="col-9 text-muted">
+                                                                    Time:{" "}
+                                                                    {startTime}{" "}
+                                                                    -{endTime}
+                                                                    <br />
+                                                                    {startDate?.slice(
+                                                                        0,
+                                                                        10
+                                                                    )}{" "}
+                                                                    -
+                                                                    {endDate?.slice(
+                                                                        0,
+                                                                        10
+                                                                    )}
+                                                                </small>
+
+                                                                <GiNotebook className="col-3 fs-2" />
+                                                            </Row>
+                                                        );
+                                                    }
+                                                })()}
+                                            </Container>
                                         </Card>
                                     </Link>
                                 </Col>

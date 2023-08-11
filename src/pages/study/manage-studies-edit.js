@@ -17,9 +17,11 @@ import { DatePickerInput } from "@mantine/dates";
 export default function EditStudyPlanner() {
     const navigate = useNavigate();
     const { id } = useParams();
+    const [plan, setPlan] = useState([]);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [date, setDate] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
 
@@ -31,12 +33,13 @@ export default function EditStudyPlanner() {
             : null;
 
         if (plan) {
+            setPlan(plan);
             setTitle(plan.title);
             setContent(plan.content);
             setStartTime(plan.startTime);
             setEndTime(plan.endTime);
-            setDate(new Date(plan.date));
-            console.log(plan.date);
+            setStartDate(new Date(plan.startDate));
+            setEndDate(new Date(plan.endDate));
         }
     }, []);
 
@@ -51,12 +54,12 @@ export default function EditStudyPlanner() {
                     placeholder: "Edit your plans here...",
                 }),
             ],
-            content: content,
+            content: plan.content,
             onUpdate: ({ editor }) => {
                 setContent(editor.getHTML());
             },
         },
-        [content]
+        [plan]
     );
 
     const updatePlan = () => {
@@ -68,14 +71,24 @@ export default function EditStudyPlanner() {
                 p.content = content;
                 p.startTime = startTime;
                 p.endTime = endTime;
+                p.startDate = startDate;
+                p.endDate = endDate;
 
-                let year = date.getFullYear();
-                let month = date.getMonth() + 1;
-                let day = date.getDate();
-                let updatedDate = new Date(`${year}-${month}-${day}`);
-                updatedDate.setHours(11, 5);
+                let syear = startDate.getFullYear();
+                let smonth = startDate.getMonth() + 1;
+                let sday = startDate.getDate();
+                let supdatedDate = new Date(`${syear}-${smonth}-${sday}`);
+                supdatedDate.setHours(11, 5);
 
-                p.date = updatedDate;
+                p.startDate = supdatedDate;
+
+                let eyear = endDate.getFullYear();
+                let emonth = endDate.getMonth() + 1;
+                let eday = endDate.getDate();
+                let eupdatedDate = new Date(`${eyear}-${emonth}-${eday}`);
+                eupdatedDate.setHours(11, 5);
+
+                p.endDate = eupdatedDate;
             }
             return p;
         });
@@ -167,17 +180,31 @@ export default function EditStudyPlanner() {
                                     setEndTime(event.target.value);
                                 }}
                             />
-                            <Space w="xl" />
+                        </div>
+                        <div style={{ display: "flex" }}>
                             <DatePickerInput
-                                value={date}
-                                onChange={(newValue) => {
-                                    console.log(newValue);
-                                    setDate(newValue);
+                                value={startDate}
+                                onChange={(newStart) => {
+                                    setStartDate(newStart);
                                 }}
-                                label="Date input"
-                                placeholder="Date input"
+                                label="Start Date"
+                                placeholder="Start Date"
                                 maw={400}
                                 mx="end"
+                                w={115}
+                            />
+                            <Space w="xl" />
+
+                            <DatePickerInput
+                                value={endDate}
+                                onChange={(newEnd) => {
+                                    setEndDate(newEnd);
+                                }}
+                                label="End Date"
+                                placeholder="End Date"
+                                maw={400}
+                                mx="end"
+                                w={115}
                             />
                         </div>
 

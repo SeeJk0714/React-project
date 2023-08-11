@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { AiFillLock } from "react-icons/ai";
 
 export default function ManageJournals() {
     const [journal, setJournal] = useState([]);
@@ -70,15 +69,15 @@ export default function ManageJournals() {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col" width="15%">
+                            <th scope="col" width="30%">
                                 Create Date{" "}
                             </th>
-                            <th scope="col" width="35%">
+                            <th scope="col" width="20%">
                                 Title
                             </th>
-                            {/* <th scope="col" width="40%">
-              Content
-            </th> */}
+                            <th scope="col" width="35%">
+                                Content
+                            </th>
                             <th scope="col" className="text-end">
                                 Actions
                             </th>
@@ -87,68 +86,52 @@ export default function ManageJournals() {
                     <tbody>
                         {journal
                             ? journal.map((jour) => {
+                                  const {
+                                      id,
+                                      title,
+                                      content,
+                                      createDate,
+                                      status,
+                                  } = jour;
                                   return (
-                                      <tr key={jour.id}>
-                                          <td> {jour.date}</td>
-                                          <td>{jour.title}</td>
-                                          {/* {jour.status === "private" ? (
-                      <div>
-                        {showForm ? (
-                          <div>
-                            <div className="mb-3">
-                              <label for="post-title" className="form-label">
-                                Enter the Password to read
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="post-password"
-                                value={input.password}
-                                onChange={(event) =>
-                                  setPassword(event.target.value)
-                                }
-                              />
-                            </div>
-                            <button
-                              className="btn btn-primary btn-sm"
-                              onClick={(event) => checkPassword(jour)}
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        ) : null}
-                        {visible ? (
-                          <td
-                            dangerouslySetInnerHTML={{ __html: jour.content }}
-                          />
-                        ) : null}
-                      </div>
-                    ) : (
-                      <td dangerouslySetInnerHTML={{ __html: jour.content }} />
-                    )} */}
+                                      <tr key={id}>
+                                          <td> {createDate}</td>
+                                          <td>{title}</td>
+                                          {status === "private" ? (
+                                              <td>
+                                                  <h3>
+                                                      Private
+                                                      <AiFillLock />
+                                                  </h3>
+                                              </td>
+                                          ) : (
+                                              <>
+                                                  {content.length > 15 ? (
+                                                      <td
+                                                          dangerouslySetInnerHTML={{
+                                                              __html:
+                                                                  content.slice(
+                                                                      0,
+                                                                      15
+                                                                  ) + "...",
+                                                          }}
+                                                      />
+                                                  ) : (
+                                                      <td
+                                                          dangerouslySetInnerHTML={{
+                                                              __html: content,
+                                                          }}
+                                                      />
+                                                  )}
+                                              </>
+                                          )}
                                           <td className="text-end me-5">
                                               <Link
-                                                  to={`/post/${jour.id}`}
+                                                  to={`/post/${id}`}
                                                   className="btn btn-warning btn-sm me-2"
                                               >
                                                   See All
                                               </Link>
-                                              {/* <div className="buttons">
-                        <Link
-                          to={`/edit-journal/${jour.id}`}
-                          className="btn btn-secondary btn-sm me-2"
-                        >
-                          <i className="bi bi-pencil"></i>
-                        </Link>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => {
-                            deleteJour(jour.id);
-                          }}
-                        >
-                          <i className="bi bi-trash"></i>
-                        </button>
-                      </div> */}
                                           </td>
                                       </tr>
                                   );
