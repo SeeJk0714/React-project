@@ -79,7 +79,13 @@ export default function ManageStudies() {
 
                                           <td>{startTime}</td>
                                           <td>{endTime}</td>
-                                          <td>{startDate?.slice(0, 10)}</td>
+                                          <td>
+                                              {startDate
+                                                  ? new Date(
+                                                        startDate
+                                                    ).toLocaleDateString()
+                                                  : ""}
+                                          </td>
                                           <td>{endDate?.slice(0, 10)}</td>
                                           <td className="text-end">
                                               <div className="buttons">

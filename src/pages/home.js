@@ -11,6 +11,8 @@ import Form from "react-bootstrap/Form";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaRegAddressBook } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
+import { AiFillLock } from "react-icons/ai";
+import { MdOutlineDangerous } from "react-icons/md";
 
 export default function Home() {
     const [keywords, setKeywords] = useState("");
@@ -69,6 +71,7 @@ export default function Home() {
                                 id,
                                 title,
                                 content,
+                                status,
                                 createDate,
                                 item,
                                 startDate,
@@ -79,7 +82,7 @@ export default function Home() {
                             return (
                                 <Col lg={4} md={6} className="mt-4 ">
                                     <Link
-                                        to={`/post/${id}`}
+                                        to={`/journalpost/${id}`}
                                         style={{ textDecoration: "none" }}
                                     >
                                         <Card
@@ -93,22 +96,34 @@ export default function Home() {
                                                     {title}
                                                 </Card.Title>
                                                 <Card.Text>
-                                                    {content.length > 15 ? (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html:
-                                                                    content.slice(
-                                                                        0,
-                                                                        15
-                                                                    ) + "...",
-                                                            }}
-                                                        />
+                                                    {status === "private" ? (
+                                                        <td>
+                                                            <h3>
+                                                                <AiFillLock />
+                                                            </h3>
+                                                        </td>
                                                     ) : (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: content,
-                                                            }}
-                                                        />
+                                                        <>
+                                                            {content.length >
+                                                            15 ? (
+                                                                <td
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html:
+                                                                            content.slice(
+                                                                                0,
+                                                                                15
+                                                                            ) +
+                                                                            "...",
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <td
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: content,
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </>
                                                     )}
                                                 </Card.Text>
                                             </Card.Body>
@@ -156,7 +171,14 @@ export default function Home() {
                             );
                         })
                     ) : (
-                        <Col>No this word added yet.</Col>
+                        <Col className="mt-5">
+                            <h1>
+                                No file enteries.
+                                <MdOutlineDangerous
+                                    style={{ fontSize: "60px" }}
+                                />
+                            </h1>
+                        </Col>
                     )}
                 </Row>
             </Container>

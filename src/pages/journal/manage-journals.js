@@ -100,7 +100,6 @@ export default function ManageJournals() {
                                           {status === "private" ? (
                                               <td>
                                                   <h3>
-                                                      Private
                                                       <AiFillLock />
                                                   </h3>
                                               </td>
@@ -127,7 +126,7 @@ export default function ManageJournals() {
                                           )}
                                           <td className="text-end me-5">
                                               <Link
-                                                  to={`/post/${id}`}
+                                                  to={`/journalpost/${id}`}
                                                   className="btn btn-warning btn-sm me-2"
                                               >
                                                   See All

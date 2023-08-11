@@ -10,6 +10,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaRegAddressBook } from "react-icons/fa";
+import { AiFillLock } from "react-icons/ai";
 
 export default function Study() {
     const [keywords, setKeywords] = useState("");
@@ -62,11 +63,12 @@ export default function Study() {
                 <Row>
                     {searchedList.length > 0 ? (
                         searchedList.map((journal) => {
-                            const { id, title, content, createDate } = journal;
+                            const { id, title, content, createDate, status } =
+                                journal;
                             return (
                                 <Col lg={4} md={6} className="mt-4 ">
                                     <Link
-                                        to={`/post/${id}`}
+                                        to={`/journalpost/${id}`}
                                         style={{ textDecoration: "none" }}
                                     >
                                         <Card
@@ -78,22 +80,34 @@ export default function Study() {
                                             <Card.Body>
                                                 <Card.Title>{title}</Card.Title>
                                                 <Card.Text>
-                                                    {content.length > 15 ? (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html:
-                                                                    content.slice(
-                                                                        0,
-                                                                        15
-                                                                    ) + "...",
-                                                            }}
-                                                        />
+                                                    {status === "private" ? (
+                                                        <td>
+                                                            <h3>
+                                                                <AiFillLock />
+                                                            </h3>
+                                                        </td>
                                                     ) : (
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: content,
-                                                            }}
-                                                        />
+                                                        <>
+                                                            {content.length >
+                                                            15 ? (
+                                                                <td
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html:
+                                                                            content.slice(
+                                                                                0,
+                                                                                15
+                                                                            ) +
+                                                                            "...",
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <td
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: content,
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </>
                                                     )}
                                                 </Card.Text>
                                             </Card.Body>

@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 
+import "./app.css";
+
 import { AiOutlineFileSearch } from "react-icons/ai";
 
 import Home from "./pages/home";
 import Dashboard from "./pages/dashboard";
-import Post from "./pages/post";
+import JournalPost from "./pages/journalpost";
+// import StudyPost from "./pages/studypost";
 import Search from "./pages/search";
 import ManageJournals from "./pages/journal/manage-journals";
 import ManageJournalsAdd from "./pages/journal/manage-journals-add";
@@ -44,7 +47,11 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/post/:id" element={<Post />} />
+                        <Route
+                            path="/journalpost/:id"
+                            element={<JournalPost />}
+                        />
+                        {/* <Route path="/studypost/:id" element={<StudyPost />} /> */}
                         <Route
                             path="/manage-journals"
                             element={<ManageJournals />}

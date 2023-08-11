@@ -1,14 +1,17 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-export default function Journal() {
+import { CgDanger } from "react-icons/cg";
+export default function JournalPost() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [password, setPassword] = useState("");
     const [visible, setVisible] = useState(false);
     const [showForm, setShowForm] = useState(true);
     const [journal, setJournal] = useState([]);
+
     useEffect(() => {
         const journal = JSON.parse(localStorage.getItem("journal"));
+
         setJournal(journal);
     }, []);
     // 1. load all the journals from the local storage
@@ -25,7 +28,24 @@ export default function Journal() {
     //   ? journals.find((p) => parseInt(p.id) === parseInt(id))
     //   : null;
     // if journal is either undefined or null, return "journal not found" message
-    if (!jour) return "journal no found";
+    if (!jour)
+        return (
+            <div
+                style={{
+                    fontSize: "50px",
+                    display: "flex",
+                    justifyContent: "center",
+                    margin: "300px",
+                    color: "grey",
+                    opacity: "30%",
+                }}
+            >
+                <h1>
+                    Not Found
+                    <CgDanger />
+                </h1>
+            </div>
+        );
     const {
         title = "",
         content = "",
@@ -56,8 +76,8 @@ export default function Journal() {
             {status === "private" ? (
                 <div>
                     {showForm ? (
-                        <div>
-                            <div className="mb-3">
+                        <div className="text-end justify-content-center d-flex">
+                            <div className="mb-2 text-center mt-5">
                                 <label
                                     for="journal-title"
                                     className="form-label"
@@ -65,24 +85,24 @@ export default function Journal() {
                                     Enter the Password to read the journal
                                 </label>
                                 <input
-                                    type="text"
-                                    className="form-control"
+                                    type="password"
+                                    className="form-control text-center mb-3 "
                                     id="journal-password"
                                     value={password}
                                     onChange={(event) =>
                                         setPassword(event.target.value)
                                     }
-                                />
+                                />{" "}
+                                <button
+                                    className="btn btn-primary btn-sm"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        checkPassword();
+                                    }}
+                                >
+                                    Submit Password
+                                </button>
                             </div>
-                            <button
-                                className="btn btn-primary btn-sm"
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    checkPassword();
-                                }}
-                            >
-                                Submit
-                            </button>
                         </div>
                     ) : null}
                     {visible ? (
@@ -146,9 +166,12 @@ export default function Journal() {
                     </p>
                 </div>
             )}
-            <div className="text-center mt-3">
+            <div className="text-center mt-5 ">
                 <Link to="/" className="btn btn-link btn-sm">
-                    <i className="bi bi-arrow-left"></i> Back
+                    <i className="bi bi-arrow-left"></i> Home
+                </Link>
+                <Link to="/manage-journals" className="btn btn-link btn-sm">
+                    Manage Journal<i className="bi bi-arrow-right"></i>
                 </Link>
             </div>
         </div>
