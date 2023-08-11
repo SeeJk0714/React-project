@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 
 import "./app.css";
 
-import { AiOutlineFileSearch } from "react-icons/ai";
+import Container from "react-bootstrap/Container";
 
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import Home from "./pages/home";
 import Dashboard from "./pages/dashboard";
 import JournalPost from "./pages/journalpost";
-// import StudyPost from "./pages/studypost";
-import Search from "./pages/search";
+import StudyPost from "./pages/studypost";
 import ManageJournals from "./pages/journal/manage-journals";
 import ManageJournalsAdd from "./pages/journal/manage-journals-add";
 import ManageJournalsEdit from "./pages/journal/manage-journals-edit";
@@ -22,36 +22,71 @@ import Journal from "./pages/journal";
 function App() {
     return (
         <Router>
-            <div style={({ height: "100vh" }, { display: "flex" })}>
-                <Sidebar style={{ height: "100vh" }}>
-                    <Menu>
-                        <MenuItem style={{ textAlign: "center" }}>
-                            {" "}
-                            <h2>SJKC</h2>
-                        </MenuItem>
+            <div>
+                <Navbar expand="lg" className="bg-body-tertiary">
+                    <Container>
+                        <Navbar.Brand>SJKC</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="ms-auto">
+                                <Nav.Link>
+                                    <Link
+                                        to="/"
+                                        style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                        }}
+                                    >
+                                        Home
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link
+                                        to="/study"
+                                        style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                        }}
+                                    >
+                                        Study
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link
+                                        to="/journal"
+                                        style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                        }}
+                                    >
+                                        Journal
+                                    </Link>
+                                </Nav.Link>
+                                <Nav.Link>
+                                    <Link
+                                        to="/dashboard"
+                                        style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                        }}
+                                    >
+                                        Dashboard
+                                    </Link>
+                                </Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
 
-                        <MenuItem component={<Link to="/" />}>Home</MenuItem>
-                        <MenuItem component={<Link to="/study" />}>
-                            Study
-                        </MenuItem>
-                        <MenuItem component={<Link to="/journal" />}>
-                            Journal
-                        </MenuItem>
-                        <MenuItem component={<Link to="/dashboard" />}>
-                            Dashboard
-                        </MenuItem>
-                    </Menu>
-                </Sidebar>
                 <div className="container">
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/search" element={<Search />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route
                             path="/journalpost/:id"
                             element={<JournalPost />}
                         />
-                        {/* <Route path="/studypost/:id" element={<StudyPost />} /> */}
+                        <Route path="/studypost/:id" element={<StudyPost />} />
                         <Route
                             path="/manage-journals"
                             element={<ManageJournals />}

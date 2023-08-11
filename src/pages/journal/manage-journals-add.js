@@ -29,12 +29,13 @@ export default function ManageJournalAdd() {
     });
     const submitForm = (event) => {
         let journal = JSON.parse(localStorage.getItem("journal"));
+        if (!journal) journal = [];
         if (title && content && nowDate && status) {
             journal.push({
-                id: Math.floor(Math.random() * 999999), // get random id
-                title: title, // pass in the value from the title
-                content: content, // pass in the value from the content
-                createDate: nowDate, // set the status to "review" as default value
+                id: Math.floor(Math.random() * 999999),
+                title: title,
+                content: content,
+                createDate: nowDate,
                 updatedate: nowDate,
                 password: password,
                 status: status,
@@ -163,15 +164,6 @@ export default function ManageJournalAdd() {
                                     hidden
                                 />
                             </div>
-                            {/* <input
-                type="text"
-                className="form-control"
-                id="post-date"
-                value={date}
-                onChange={(event) => {
-                  setDate(event.target.value);
-                }}
-              /> */}
                         </div>
                         <div className="text-end">
                             <button type="submit" className="btn btn-primary">

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-// import { nanoid } from "nanoid";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import { RichTextEditor } from "@mantine/tiptap";
@@ -48,7 +47,7 @@ export default function ManageStudiesAdd() {
 
     const submitForm = () => {
         let plans = JSON.parse(localStorage.getItem("plans"));
-
+        if (!plans) plans = [];
         if (title && content && startDate && endDate && startTime && endTime) {
             plans.push({
                 id: Math.floor(Math.random() * 100000),

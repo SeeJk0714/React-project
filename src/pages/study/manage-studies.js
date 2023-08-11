@@ -86,16 +86,15 @@ export default function ManageStudies() {
                                                     ).toLocaleDateString()
                                                   : ""}
                                           </td>
-                                          <td>{endDate?.slice(0, 10)}</td>
+                                          <td>
+                                              {endDate
+                                                  ? new Date(
+                                                        endDate
+                                                    ).toLocaleDateString()
+                                                  : ""}
+                                          </td>
                                           <td className="text-end">
                                               <div className="buttons">
-                                                  {/* <Link
-                            to="/"
-                            target="_blank"
-                            className="btn btn-primary btn-sm me-2 disabled"
-                          >
-                            <i className="bi bi-eye"></i>
-                          </Link> */}
                                                   <Link
                                                       to={`/manage-studies-edit/${id}`}
                                                       className="btn btn-secondary btn-sm me-2"

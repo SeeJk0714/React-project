@@ -17,11 +17,10 @@ export default function ManageJournalsEdit() {
     const [content, setContent] = useState("");
     const [status, setStatus] = useState("");
     const [password, setPassword] = useState("");
-    // this will be called once when the page is loaded
+
     useEffect(() => {
-        // 1. load all the journals from the local storage
         const journal = JSON.parse(localStorage.getItem("journal"));
-        // 2. find the single journal with the provided id inside the journals array
+
         const journals = journal
             ? journal.find((j) => parseInt(j.id) === parseInt(id))
             : null;
@@ -32,7 +31,7 @@ export default function ManageJournalsEdit() {
             setStatus(journals.status);
             setPassword(journals.password);
         }
-    }, []); // empty array so that only trigger once when page is loaded
+    }, []);
     const editor = useEditor(
         {
             extensions: [
@@ -50,9 +49,8 @@ export default function ManageJournalsEdit() {
         [journal]
     );
     const editJournal = () => {
-        // 1. load the journals from local storage
         const journal = JSON.parse(localStorage.getItem("journal"));
-        // 2. use .map to modify the array
+
         const newJournal = journal.map((p) => {
             if (parseInt(p.id) === parseInt(id)) {
                 p.title = title;
@@ -63,10 +61,10 @@ export default function ManageJournalsEdit() {
             }
             return p;
         });
-        // 3. save the newjournals into the local storage
+
         localStorage.setItem("journal", JSON.stringify(newJournal));
-        // 4. redirect back to /manage-journals
-        navigate("/post/" + id);
+
+        navigate("/journalpost/" + id);
     };
     return (
         <div className="container mx-auto my-5">
@@ -143,7 +141,7 @@ export default function ManageJournalsEdit() {
                                 Password
                             </label>
                             <input
-                                type="text"
+                                type="password"
                                 className="form-control"
                                 id="journal-password"
                                 value={password}

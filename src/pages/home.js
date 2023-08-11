@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -82,7 +81,11 @@ export default function Home() {
                             return (
                                 <Col lg={4} md={6} className="mt-4 ">
                                     <Link
-                                        to={`/journalpost/${id}`}
+                                        to={
+                                            item === "journal"
+                                                ? `/journalpost/${id}`
+                                                : `/studypost/${id}`
+                                        }
                                         style={{ textDecoration: "none" }}
                                     >
                                         <Card

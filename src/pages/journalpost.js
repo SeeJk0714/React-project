@@ -14,20 +14,14 @@ export default function JournalPost() {
 
         setJournal(journal);
     }, []);
-    // 1. load all the journals from the local storage
+
     const journals = JSON.parse(localStorage.getItem("journal"));
-    // 2. find the single journal with the provided id inside the journals array
-    // method 1
+
     let jour = null;
     if (journals) {
-        // use .find to find the journal with the provided id
         jour = journals.find((p) => parseInt(p.id) === parseInt(id));
     }
-    // method 2
-    // const journal = journals
-    //   ? journals.find((p) => parseInt(p.id) === parseInt(id))
-    //   : null;
-    // if journal is either undefined or null, return "journal not found" message
+
     if (!jour)
         return (
             <div
