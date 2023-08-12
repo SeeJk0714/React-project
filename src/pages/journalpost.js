@@ -1,6 +1,8 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { CgDanger } from "react-icons/cg";
+import { BiLeftArrowCircle } from "react-icons/bi";
+
 export default function JournalPost() {
     const navigate = useNavigate();
     const { id } = useParams();
@@ -121,7 +123,10 @@ export default function JournalPost() {
                             <h1 className="h1 text-start">{title}</h1>
                             <hr></hr>
                             <div
-                                dangerouslySetInnerHTML={{ __html: content }}
+                                dangerouslySetInnerHTML={{
+                                    __html: content,
+                                }}
+                                className="PostContent"
                             />
                             <p className="mt-5 pt-5 text-muted">
                                 Create Date: {createDate}
@@ -153,7 +158,10 @@ export default function JournalPost() {
                     </div>
                     <h1 className="h1 text-start">{title}</h1>
                     <hr></hr>
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                    <div
+                        dangerouslySetInnerHTML={{ __html: content }}
+                        className="PostContent"
+                    />
                     <p className="mt-5 text-muted">Create Date: {createDate}</p>
                     <p className=" text-muted">
                         Edit at: {updateDate === "" ? "-" : updateDate}

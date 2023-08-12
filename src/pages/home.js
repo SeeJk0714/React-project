@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
@@ -79,7 +79,7 @@ export default function Home() {
                                 endTime,
                             } = journal;
                             return (
-                                <Col lg={4} md={6} className="mt-4 ">
+                                <Col lg={4} md={6} sm={12} className=" mt-4 ">
                                     <Link
                                         to={
                                             item === "journal"
@@ -93,6 +93,7 @@ export default function Home() {
                                                 height: "200px",
                                                 width: "250px",
                                             }}
+                                            className="MainCard"
                                         >
                                             <Card.Body>
                                                 <Card.Title className="mb-3 ">
@@ -130,11 +131,11 @@ export default function Home() {
                                                     )}
                                                 </Card.Text>
                                             </Card.Body>
-                                            <Container>
+                                            <Container className="CardTime">
                                                 {(() => {
                                                     if (item === "journal") {
                                                         return (
-                                                            <Row className="mb-4 ">
+                                                            <Row className="mb-4 mt-4">
                                                                 <small className="col-9 text-muted ">
                                                                     {createDate}
                                                                 </small>
@@ -145,7 +146,7 @@ export default function Home() {
                                                         item === "study"
                                                     ) {
                                                         return (
-                                                            <Row className="mb-3">
+                                                            <Row className="mb-3 mt-4">
                                                                 <small className="col-9 text-muted">
                                                                     Time:{" "}
                                                                     {startTime}{" "}

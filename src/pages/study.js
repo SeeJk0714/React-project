@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,6 +9,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { GiNotebook } from "react-icons/gi";
+import { MdOutlineDangerous } from "react-icons/md";
 
 export default function Study() {
     const [keywords, setKeywords] = useState("");
@@ -74,7 +74,7 @@ export default function Study() {
                             return (
                                 <Col lg={4} md={6} className="mt-4 ">
                                     <Link
-                                        to={`/post/${id}`}
+                                        to={`/studypost/${id}`}
                                         style={{ textDecoration: "none" }}
                                     >
                                         <Card
@@ -82,6 +82,7 @@ export default function Study() {
                                                 height: "200px",
                                                 width: "250px",
                                             }}
+                                            className="MainCard"
                                         >
                                             <Card.Body>
                                                 <Card.Title>{title}</Card.Title>
@@ -106,7 +107,7 @@ export default function Study() {
                                                 </Card.Text>
                                             </Card.Body>
                                             <Container>
-                                                <Row className="mb-3">
+                                                <Row className="mb-3 mt-4">
                                                     <small className="col-9 text-muted">
                                                         Time: {startTime} -
                                                         {endTime}
@@ -127,7 +128,14 @@ export default function Study() {
                             );
                         })
                     ) : (
-                        <Col>No this word added yet.</Col>
+                        <Col className="mt-5">
+                            <h1>
+                                No file enteries.
+                                <MdOutlineDangerous
+                                    style={{ fontSize: "60px" }}
+                                />
+                            </h1>
+                        </Col>
                     )}
                 </Row>
             </Container>

@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaRegAddressBook } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
+import { MdOutlineDangerous } from "react-icons/md";
 
 export default function Study() {
     const [keywords, setKeywords] = useState("");
@@ -75,6 +76,7 @@ export default function Study() {
                                                 height: "200px",
                                                 width: "250px",
                                             }}
+                                            className="MainCard"
                                         >
                                             <Card.Body>
                                                 <Card.Title>{title}</Card.Title>
@@ -111,7 +113,7 @@ export default function Study() {
                                                 </Card.Text>
                                             </Card.Body>
                                             <Container>
-                                                <Row className="mb-4 ">
+                                                <Row className="mb-4 mt-4">
                                                     <small className="col-9 text-muted ">
                                                         {createDate}
                                                     </small>
@@ -124,7 +126,14 @@ export default function Study() {
                             );
                         })
                     ) : (
-                        <Col>No this word added yet.</Col>
+                        <Col className="mt-5">
+                            <h1>
+                                No file enteries.
+                                <MdOutlineDangerous
+                                    style={{ fontSize: "60px" }}
+                                />
+                            </h1>
+                        </Col>
                     )}
                 </Row>
             </Container>
