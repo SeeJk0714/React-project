@@ -131,8 +131,10 @@ export default function JournalPost() {
                             <p className="mt-5 pt-5 text-muted">
                                 Create Date: {createDate}
                             </p>
-                            <p className="mt-0  pt-0 text-muted">
-                                Edit at: {updateDate === "" ? "-" : updateDate}
+                            <p className=" text-muted">
+                                {updateDate === "" ? null : (
+                                    <p>Edit at: {updateDate}</p>
+                                )}
                             </p>
                         </div>
                     ) : null}
@@ -167,7 +169,9 @@ export default function JournalPost() {
                     />
                     <p className="mt-5 text-muted">Create Date: {createDate}</p>
                     <p className=" text-muted">
-                        Edit at: {updateDate === "" ? "-" : updateDate}
+                        {updateDate === "" ? null : (
+                            <p>Edit at: {updateDate}</p>
+                        )}
                     </p>
                 </div>
             )}
