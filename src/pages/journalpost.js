@@ -138,7 +138,10 @@ export default function JournalPost() {
                     ) : null}
                 </div>
             ) : (
-                <div>
+                <div
+                    className="py-3 px-4 rounded-4"
+                    style={{ background: "rgb(255, 255, 255, 0.5)" }}
+                >
                     <div className="buttons text-end mb-3">
                         Actions: <></>
                         <Link

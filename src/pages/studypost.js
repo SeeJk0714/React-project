@@ -57,7 +57,10 @@ export default function StudyPost() {
     return (
         <div className="container mx-auto my-5">
             <div>
-                <div>
+                <div
+                    className="py-3 px-4 rounded-4"
+                    style={{ background: "rgb(255, 255, 255, 0.5)" }}
+                >
                     <div className="buttons text-end mb-5">
                         Actions: <></>
                         <Link
