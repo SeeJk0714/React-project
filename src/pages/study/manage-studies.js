@@ -31,8 +31,8 @@ export default function ManageStudies() {
                     </Link>
                 </div>
             </div>
-            <div className="card mb-2 p-4">
-                <table className="table">
+            <div className="card mb-2 p-4 overflow-x-scroll">
+                <table className="table ">
                     <thead>
                         <tr>
                             <th scope="col">Title</th>

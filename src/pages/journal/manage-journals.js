@@ -4,13 +4,7 @@ import { AiFillLock } from "react-icons/ai";
 
 export default function ManageJournals() {
     const [journal, setJournal] = useState([]);
-    const [password, setPassword] = useState("");
-    const [visible, setVisible] = useState(false);
-    const [showForm, setShowForm] = useState(true);
-    const [checkedList, setCheckedList] = useState([]);
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
     useEffect(() => {
         const newJour = JSON.parse(localStorage.getItem("journal"));
 

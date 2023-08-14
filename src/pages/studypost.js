@@ -77,10 +77,7 @@ export default function StudyPost() {
                     </div>
                     <h1 className="h1 text-start">{title}</h1>
                     <hr></hr>
-                    <div
-                        dangerouslySetInnerHTML={{ __html: content }}
-                        className="PostText "
-                    />
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
                     <p className="mt-5 pt-5 text-muted">
                         Time: {startTime}-{endTime}
                         <br />
