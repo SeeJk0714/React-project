@@ -14,10 +14,11 @@ import { MdOutlineDangerous } from "react-icons/md";
 
 export default function Study() {
     const [keywords, setKeywords] = useState("");
-    const journalList = JSON.parse(localStorage.getItem("journal"));
+    let journalList = JSON.parse(localStorage.getItem("journal"));
     const regex = /(<([^>]+)>)/gi;
 
     const searchedList = useMemo(() => {
+        if (!journalList) journalList = [];
         return journalList
             .filter(
                 (i) =>

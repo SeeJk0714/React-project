@@ -20,9 +20,9 @@ export default function Home() {
     const regex = /(<([^>]+)>)/gi;
 
     const searchedList = useMemo(() => {
+        if (!journalList) journalList = [];
+        if (!studyList) studyList = [];
         const combined = [...journalList, ...studyList];
-        if (journalList) journalList = [];
-        if (studyList) studyList = [];
         return combined
             .filter(
                 (i) =>

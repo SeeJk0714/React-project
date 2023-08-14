@@ -20,7 +20,7 @@ export default function Dashboard() {
                             <div className="text-center mt-3">
                                 <Link
                                     to="/manage-studies"
-                                    className="btn btn-primary btn-sm"
+                                    className="btn btn-outline-dark btn-sm ms-2"
                                 >
                                     Access
                                 </Link>
@@ -43,7 +43,7 @@ export default function Dashboard() {
                             <div className="text-center mt-3">
                                 <Link
                                     to="/manage-journals"
-                                    className="btn btn-primary btn-sm"
+                                    className="btn btn-outline-dark btn-sm ms-2"
                                 >
                                     Access
                                 </Link>
