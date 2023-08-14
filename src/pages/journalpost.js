@@ -168,12 +168,15 @@ export default function JournalPost() {
                     </p>
                 </div>
             )}
-            <div className="text-center mt-5 ">
-                <Link to="/" className="btn btn-link btn-sm">
+            <div id="jbtn" className="text-center mt-5 ">
+                <Link to="/" className="btn btn-outline-dark btn-sm">
                     <i className="bi bi-arrow-left"></i> Home
                 </Link>
-                <Link to="/manage-journals" className="btn btn-link btn-sm">
-                    Manage Journal<i className="bi bi-arrow-right"></i>
+                <Link
+                    to="/manage-journals"
+                    className="btn btn-outline-dark btn-sm ms-2"
+                >
+                    Manage Journal<i className="bi bi-arrow-right ms-2"></i>
                 </Link>
             </div>
         </div>
